@@ -11,7 +11,8 @@ public class conectaDAO {
     
     private static final String URL = "jdbc:mysql://localhost:3306/uc11?useSSL=false";
     private static final String USER = "root";
-    private static final String PASS = "pixuca25";
+    //colocar sua senha
+    private static final String PASS = "SUA-SENHA";
 
     public static Connection conectar() throws SQLException {
         return DriverManager.getConnection(URL, USER, PASS);
