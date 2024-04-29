@@ -6,28 +6,25 @@ import javax.swing.JOptionPane;
 
 
 
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 
-/**
- *
- * @author Adm
- */
 public class conectaDAO {
     
-    public Connection connectDB(){
-        Connection conn = null;
-        
-        try {
-        
-            conn = DriverManager.getConnection("jdbc:mysql://localhost/uc11?user=root&password=");
-            
-        } catch (SQLException erro){
-            JOptionPane.showMessageDialog(null, "Erro ConectaDAO" + erro.getMessage());
-        }
-        return conn;
+    private static final String URL = "jdbc:mysql://localhost:3306/uc11?useSSL=false";
+    private static final String USER = "root";
+    private static final String PASS = "pixuca25";
+
+    public static Connection conectar() throws SQLException {
+        return DriverManager.getConnection(URL, USER, PASS);
     }
-    
+
+    public static void desconectar(Connection conexao) {
+        if (conexao != null) {
+            try {
+                conexao.close();
+            } catch (SQLException e) {
+                // Aqui você poderia logar o erro usando um Logger ou rethrow a exceção
+                throw new RuntimeException("Erro ao fechar conexão com o banco de dados", e);
+            }
+        }
+    }
 }
