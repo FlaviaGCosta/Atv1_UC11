@@ -1,41 +1,35 @@
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.util.ArrayList;
 
 
-public class VendasVIEW extends JFrame {
+public class vendasVIEW extends JFrame {
     private JTable table;
-    private ProdutosDAO produtosDAO;
 
-    public VendasVIEW() {
-        produtosDAO = new ProdutosDAO();
-        initializeUI();
-        loadVendidos();
-    }
-
-    private void initializeUI() {
+    public vendasVIEW() {
         setTitle("Produtos Vendidos");
         setSize(400, 300);
+        setLocationRelativeTo(null);
         setLayout(new BorderLayout());
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         table = new JTable();
         table.setModel(new DefaultTableModel(new Object[]{"ID", "Nome", "Valor", "Status"}, 0));
         add(new JScrollPane(table), BorderLayout.CENTER);
+
+        loadVendidos();
     }
 
     private void loadVendidos() {
         DefaultTableModel model = (DefaultTableModel) table.getModel();
-        model.setRowCount(0); 
+        model.setRowCount(0);
 
-        for (ProdutosDTO produto : produtosDAO.listarProdutosVendidos()) {
+        ProdutosDAO produtosDAO = new ProdutosDAO();
+        ArrayList<ProdutosDTO> vendidos = produtosDAO.listarProdutosVendidos();
+
+        for (ProdutosDTO produto : vendidos) {
             model.addRow(new Object[]{produto.getId(), produto.getNome(), produto.getValor(), produto.getStatus()});
         }
-    }
-
-    public static void main(String[] args) {
-        EventQueue.invokeLater(() -> {
-            new VendasVIEW().setVisible(true);
-        });
     }
 }
