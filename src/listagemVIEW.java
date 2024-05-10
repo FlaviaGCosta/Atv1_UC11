@@ -1,8 +1,13 @@
 
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import java.sql.SQLException;
+import javax.swing.JButton;
+
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -138,7 +143,7 @@ public class listagemVIEW extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVenderActionPerformed
-         String id = id_produto_venda.getText().trim(); // Pega o ID do produto do campo de texto
+        String id = id_produto_venda.getText().trim();
 
         if (id.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Por favor, digite o ID do produto.", "Atenção", JOptionPane.WARNING_MESSAGE);
@@ -151,7 +156,7 @@ public class listagemVIEW extends javax.swing.JFrame {
             boolean sucesso = produtosDAO.venderProduto(produtoId);
             if (sucesso) {
                 JOptionPane.showMessageDialog(this, "Produto vendido com sucesso!");
-                listarProdutos(); // Atualiza a lista após a venda
+                listarProdutos();  // Aqui foi corrigido para chamar o método correto
             } else {
                 JOptionPane.showMessageDialog(this, "Falha ao vender produto. Verifique se o ID é válido.");
             }

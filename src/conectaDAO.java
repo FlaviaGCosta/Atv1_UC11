@@ -2,7 +2,7 @@
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import javax.swing.JOptionPane;
+
 
 
 
@@ -23,7 +23,6 @@ public class conectaDAO {
             try {
                 conexao.close();
             } catch (SQLException e) {
-                // Aqui você poderia logar o erro usando um Logger ou rethrow a exceção
                 throw new RuntimeException("Erro ao fechar conexão com o banco de dados", e);
             }
         }
