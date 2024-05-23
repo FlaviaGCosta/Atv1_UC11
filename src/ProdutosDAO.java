@@ -69,10 +69,47 @@ public class ProdutosDAO {
             }
             return produtos;
      }
- }
+    
+    
+    public boolean venderProduto(int produtoId) throws SQLException {
+        String sql = "UPDATE produtos SET status = 'Vendido' WHERE id = ?";
+
+        try (Connection conn = conexaoBD.conectar();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, produtoId);
+
+            int affectedRows = stmt.executeUpdate();
+            return affectedRows > 0;
+        } catch (SQLException e) {
+            System.out.println("Erro ao vender produto: " + e.getMessage());
+            throw e;
+        }
+    }
+
+    public ArrayList<ProdutosDTO> listarProdutosVendidos() {
+        ArrayList<ProdutosDTO> produtosVendidos = new ArrayList<>();
+        String sql = "SELECT id, nome, valor, status FROM produtos WHERE status = 'Vendido'";
+
+        try (Connection conn = conexaoBD.conectar();
+             PreparedStatement pstmt = conn.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
+
+            while (rs.next()) {
+                ProdutosDTO produto = new ProdutosDTO();
+                produto.setId(rs.getInt("id"));
+                produto.setNome(rs.getString("nome"));
+                produto.setValor(rs.getInt("valor"));
+                produto.setStatus(rs.getString("status"));
+                produtosVendidos.add(produto);
+            }
+        } catch (SQLException e) {
+            System.err.println("Erro ao listar produtos vendidos: " + e.getMessage());
+        }
+        return produtosVendidos;
+    }
+}
     
     
     
         
-
-
